@@ -27,11 +27,11 @@ Copyright 2016 Google Inc.
     <div class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
-          <div class="navbar-brand">Bookshelf</div>
+          <div class="navbar-brand">Impulse App</div>
         </div>
         <ul class="nav navbar-nav">
-          <li><a href="/">Books</a></li>
-          <c:if test="${isAuthConfigured}"><li><a href="/books/mine">My Books</a></li></c:if>
+          <li><a href="/">Posts</a></li>
+          <c:if test="${isAuthConfigured}"><li><a href="/books/mine">My Posts</a></li></c:if>
         </ul>
         <p class="navbar-text navbar-right">
           <c:choose>

@@ -18,7 +18,7 @@ Copyright 2016 Google Inc.
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <div class="container">
   <h3>
-    <c:out value="${action}" /> book
+    <c:out value="${action}" /> Post
   </h3>
 
   <form method="POST" action="${destination}">
