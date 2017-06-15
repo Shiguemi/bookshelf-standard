@@ -25,6 +25,7 @@
       <filter-name>DatastoreSessionFilter</filter-name>
       <url-pattern>/</url-pattern>
       <url-pattern>/books</url-pattern>
+      <url-pattern>/lists</url-pattern>
       <url-pattern>/books/mine</url-pattern>
       <url-pattern>/create</url-pattern>
       <url-pattern>/delete</url-pattern>
@@ -80,6 +81,15 @@
     <servlet-mapping>
       <servlet-name>delete</servlet-name>
       <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>request</servlet-name>
+        <servlet-class>com.example.getstarted.basicactions.RequestPostsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>request</servlet-name>
+        <url-pattern>/request</url-pattern>
     </servlet-mapping>
 
     <!-- [START config] -->
