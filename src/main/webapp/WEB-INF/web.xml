@@ -18,69 +18,91 @@
       not included in web.xml will be loaded after filters listed below.
     -->
     <filter>
-      <filter-name>DatastoreSessionFilter</filter-name>
-      <filter-class>com.example.getstarted.util.DatastoreSessionFilter</filter-class>
+        <filter-name>DatastoreSessionFilter</filter-name>
+        <filter-class>com.example.getstarted.util.DatastoreSessionFilter</filter-class>
     </filter>
     <filter-mapping>
-      <filter-name>DatastoreSessionFilter</filter-name>
-      <url-pattern>/</url-pattern>
-      <url-pattern>/books</url-pattern>
-      <url-pattern>/lists</url-pattern>
-      <url-pattern>/books/mine</url-pattern>
-      <url-pattern>/create</url-pattern>
-      <url-pattern>/delete</url-pattern>
-      <url-pattern>/login</url-pattern>
-      <url-pattern>/logout</url-pattern>
-      <url-pattern>/oauth2callback</url-pattern>
-      <url-pattern>/read</url-pattern>
-      <url-pattern>/update</url-pattern>
+        <filter-name>DatastoreSessionFilter</filter-name>
+        <url-pattern>/</url-pattern>
+        <url-pattern>/books</url-pattern>
+        <url-pattern>/posts</url-pattern>
+        <url-pattern>/lists</url-pattern>
+        <url-pattern>/books/mine</url-pattern>
+        <url-pattern>/create</url-pattern>
+        <url-pattern>/createSchedule</url-pattern>
+        <url-pattern>/delete</url-pattern>
+        <url-pattern>/login</url-pattern>
+        <url-pattern>/logout</url-pattern>
+        <url-pattern>/oauth2callback</url-pattern>
+        <url-pattern>/read</url-pattern>
+        <url-pattern>/request</url-pattern>
+        <url-pattern>/update</url-pattern>
     </filter-mapping>
 
     <servlet>
-      <servlet-name>list</servlet-name>
-      <servlet-class>com.example.getstarted.basicactions.ListBookServlet</servlet-class>
-      <load-on-startup>1</load-on-startup>
+        <servlet-name>list</servlet-name>
+        <servlet-class>com.example.getstarted.basicactions.ListBookServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-      <servlet-name>list</servlet-name>
-      <url-pattern>/</url-pattern>
-      <url-pattern>/books</url-pattern>
+        <servlet-name>list</servlet-name>
+        <url-pattern>/</url-pattern>
+        <url-pattern>/books</url-pattern>
     </servlet-mapping>
 
     <servlet>
-      <servlet-name>create</servlet-name>
-      <servlet-class>com.example.getstarted.basicactions.CreateBookServlet</servlet-class>
+        <servlet-name>post</servlet-name>
+        <servlet-class>com.example.getstarted.basicactions.ListScheduleServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-      <servlet-name>create</servlet-name>
-      <url-pattern>/create</url-pattern>
+        <servlet-name>post</servlet-name>
+        <url-pattern>/posts</url-pattern>
     </servlet-mapping>
 
     <servlet>
-      <servlet-name>update</servlet-name>
-      <servlet-class>com.example.getstarted.basicactions.UpdateBookServlet</servlet-class>
+        <servlet-name>create</servlet-name>
+        <servlet-class>com.example.getstarted.basicactions.CreateBookServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-      <servlet-name>update</servlet-name>
-      <url-pattern>/update</url-pattern>
+        <servlet-name>create</servlet-name>
+        <url-pattern>/create</url-pattern>
     </servlet-mapping>
 
     <servlet>
-      <servlet-name>read</servlet-name>
-      <servlet-class>com.example.getstarted.basicactions.ReadBookServlet</servlet-class>
+        <servlet-name>createSchedule</servlet-name>
+        <servlet-class>com.example.getstarted.basicactions.CreateScheduleServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-      <servlet-name>read</servlet-name>
-      <url-pattern>/read</url-pattern>
+        <servlet-name>createSchedule</servlet-name>
+        <url-pattern>/createSchedule</url-pattern>
     </servlet-mapping>
 
     <servlet>
-      <servlet-name>delete</servlet-name>
-      <servlet-class>com.example.getstarted.basicactions.DeleteBookServlet</servlet-class>
+        <servlet-name>update</servlet-name>
+        <servlet-class>com.example.getstarted.basicactions.UpdateBookServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-      <servlet-name>delete</servlet-name>
-      <url-pattern>/delete</url-pattern>
+        <servlet-name>update</servlet-name>
+        <url-pattern>/update</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>read</servlet-name>
+        <servlet-class>com.example.getstarted.basicactions.ReadBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>read</servlet-name>
+        <url-pattern>/read</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>delete</servlet-name>
+        <servlet-class>com.example.getstarted.basicactions.DeleteBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>delete</servlet-name>
+        <url-pattern>/delete</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -114,4 +136,4 @@
     </context-param>
     <!-- [END config] -->
 </web-app>
-<!-- [END webxml] -->
+        <!-- [END webxml] -->

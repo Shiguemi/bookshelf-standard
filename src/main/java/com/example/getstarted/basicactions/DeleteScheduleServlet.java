@@ -35,7 +35,7 @@ public class DeleteScheduleServlet extends HttpServlet {
     ScheduleDao dao = (ScheduleDao) this.getServletContext().getAttribute("dao");
     try {
       dao.deleteSchedule(id);
-      resp.sendRedirect("/postss");
+      resp.sendRedirect("/posts");
     } catch (Exception e) {
       throw new ServletException("Error deleting schedule", e);
     }

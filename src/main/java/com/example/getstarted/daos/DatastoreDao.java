@@ -42,7 +42,7 @@ public class DatastoreDao implements BookDao, ScheduleDao {
 
   // [START constructor]
   private DatastoreService datastore;
-  private static final String BOOK_KIND = "Book2";
+  private static final String BOOK_KIND = "Book";
   private static final String SCHEDULE_KIND = "Schedule";
 
   public DatastoreDao() {

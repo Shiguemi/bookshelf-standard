@@ -66,7 +66,7 @@ public class ListScheduleServlet extends HttpServlet {
     } catch (Exception e) {
       throw new ServletException("Error listing schedules", e);
     }
-    req.getSession().getServletContext().setAttribute("schedules", schedules);
+    req.getSession().getServletContext().setAttribute("posts", schedules);
     StringBuilder scheduleNames = new StringBuilder();
     for (Schedule schedule : schedules) {
       scheduleNames.append(schedule.getTitle() + " ");

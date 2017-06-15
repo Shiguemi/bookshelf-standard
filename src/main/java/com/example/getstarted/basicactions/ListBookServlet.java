@@ -23,6 +23,7 @@ import com.example.getstarted.objects.Result;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -52,7 +53,7 @@ public class ListBookServlet extends HttpServlet {
             // Use this url when using a local mysql server
             connect = this.getServletContext().getInitParameter("sql.urlLocal");
           } else if (System.getProperty("com.google.appengine.runtime.version")
-              .startsWith("Google App Engine/")) {
+                  .startsWith("Google App Engine/")) {
             // Use this url when on App Engine, connecting to Cloud SQL.
             // Uses a special adapter because of the App Engine sandbox.
             connect = this.getServletContext().getInitParameter("sql.urlRemoteGAE");
@@ -64,14 +65,14 @@ public class ListBookServlet extends HttpServlet {
         break;
       default:
         throw new IllegalStateException(
-            "Invalid storage type. Check if bookshelf.storageType property is set.");
+                "Invalid storage type. Check if bookshelf.storageType property is set.");
     }
     this.getServletContext().setAttribute("dao", dao);
   }
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,
-      ServletException {
+          ServletException {
     BookDao dao = (BookDao) this.getServletContext().getAttribute("dao");
     String startCursor = req.getParameter("cursor");
     List<Book> books = null;
@@ -80,14 +81,37 @@ public class ListBookServlet extends HttpServlet {
       Result<Book> result = dao.listBooks(startCursor);
       books = result.result;
       endCursor = result.cursor;
+      System.out.println("ListBookServlet: " + result);
     } catch (Exception e) {
       throw new ServletException("Error listing books", e);
     }
-    req.getSession().getServletContext().setAttribute("books", books);
+
+    Book temp;
+    temp = new Book.Builder()
+            .title("teste hard coded 1")
+            .author("Lucas")
+            .build();
+
+    Book temp2;
+    temp2 = new Book.Builder()
+            .title("teste hard coded 2")
+            .author("Lucas")
+            .build();
+
+    ArrayList<Book> listaLivros = new ArrayList<Book>();
+
+    listaLivros.add(temp);
+    listaLivros.add(temp2);
+
+    int nBooks = 0;
+    req.getSession().getServletContext().setAttribute("posts", listaLivros  );
     StringBuilder bookNames = new StringBuilder();
     for (Book book : books) {
       bookNames.append(book.getTitle() + " ");
+      nBooks++;
     }
+
+    req.setAttribute("nPosts", nBooks);
     req.setAttribute("cursor", endCursor);
     req.setAttribute("page", "list");
     req.getRequestDispatcher("/base.jsp").forward(req, resp);

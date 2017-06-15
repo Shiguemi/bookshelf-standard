@@ -20,11 +20,16 @@ Copyright 2016 Google Inc.
   <h3>Post</h3>
   <a href="/create" class="btn btn-success btn-sm">
     <i class="glyphicon glyphicon-plus"></i>
-    Add Post
+    Add Book
   </a>
+  <a href="/createSchedule" class="btn btn-success btn-sm">
+    <i class="glyphicon glyphicon-plus"></i>
+    Add Schedule
+  </a>
+  <h4> ${nPosts} </h4>
   <c:choose>
   <c:when test="${empty posts}">
-  <p>No Posts found</p>
+  <p>No Posts found teste</p>
   </c:when>
   <c:otherwise>
   <c:forEach items="${posts}" var="post">
