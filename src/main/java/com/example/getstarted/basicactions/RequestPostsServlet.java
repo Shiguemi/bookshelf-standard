@@ -32,7 +32,11 @@ public class RequestPostsServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,
       ServletException {
-    Long id = Long.decode(req.getParameter("id"));
+    Long id = null;
+    String str_id = req.getParameter("id");
+    if (null != str_id) {
+        id = Long.decode(str_id);
+    }
     ScheduleDao dao = (ScheduleDao) this.getServletContext().getAttribute("dao");
     try {
       Schedule schedule = dao.readSchedule(id);
