@@ -86,25 +86,8 @@ public class ListBookServlet extends HttpServlet {
       throw new ServletException("Error listing books", e);
     }
 
-    Book temp;
-    temp = new Book.Builder()
-            .title("teste hard coded 1")
-            .author("Lucas")
-            .build();
-
-    Book temp2;
-    temp2 = new Book.Builder()
-            .title("teste hard coded 2")
-            .author("Lucas")
-            .build();
-
-    ArrayList<Book> listaLivros = new ArrayList<Book>();
-
-    listaLivros.add(temp);
-    listaLivros.add(temp2);
-
     int nBooks = 0;
-    req.getSession().getServletContext().setAttribute("posts", listaLivros  );
+    req.getSession().getServletContext().setAttribute("posts", books  );
     StringBuilder bookNames = new StringBuilder();
     for (Book book : books) {
       bookNames.append(book.getTitle() + " ");
