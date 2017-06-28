@@ -54,7 +54,30 @@ public class ListScheduleServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,
-      ServletException {
+          ServletException {
+    ScheduleDao dao = (ScheduleDao) this.getServletContext().getAttribute("dao");
+    String startCursor = req.getParameter("cursor");
+    List<Schedule> schedules = null;
+    String endCursor = null;
+    try {
+      Result<Schedule> result = dao.listSchedules(startCursor);
+      schedules = result.result;
+      endCursor = result.cursor;
+    } catch (Exception e) {
+      throw new ServletException("Error listing schedules", e);
+    }
+    req.getSession().getServletContext().setAttribute("posts", schedules);
+    StringBuilder scheduleNames = new StringBuilder();
+    for (Schedule schedule : schedules) {
+      scheduleNames.append(schedule.getTitle() + " ");
+    }
+    req.setAttribute("cursor", endCursor);
+    req.setAttribute("page", "list");
+    req.getRequestDispatcher("/base.jsp").forward(req, resp);
+  }
+
+  public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException,
+          ServletException {
     ScheduleDao dao = (ScheduleDao) this.getServletContext().getAttribute("dao");
     String startCursor = req.getParameter("cursor");
     List<Schedule> schedules = null;
