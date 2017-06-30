@@ -36,7 +36,7 @@ public class ReadScheduleServlet extends HttpServlet {
     ScheduleDao dao = (ScheduleDao) this.getServletContext().getAttribute("dao");
     try {
       Schedule schedule = dao.readSchedule(id);
-      req.setAttribute("schedule", schedule);
+      req.setAttribute("post", schedule);
       req.setAttribute("page", "view");
       req.getRequestDispatcher("/base.jsp").forward(req, resp);
     } catch (Exception e) {

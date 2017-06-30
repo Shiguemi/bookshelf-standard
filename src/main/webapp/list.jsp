@@ -18,18 +18,24 @@ Copyright 2016 Google Inc.
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container">
   <h3>Post</h3>
-  <a href="/create" class="btn btn-success btn-sm">
-    <i class="glyphicon glyphicon-plus"></i>
-    Add Book
-  </a>
-  <a href="/createSchedule" class="btn btn-success btn-sm">
-    <i class="glyphicon glyphicon-plus"></i>
-    Add Schedule
-  </a>
+
+    <a href="/create" class="btn btn-success btn-sm">
+      <i class="glyphicon glyphicon-plus"></i>
+      Add a test Book
+    </a>
+    <a href="/createSchedule" class="btn btn-success btn-sm">
+      <i class="glyphicon glyphicon-plus"></i>
+      Add Schedule
+    </a>
+    <a href="/list" class="btn btn-success btn-sm">
+      <i class="glyphicon glyphicon-plus"></i>
+      Nothing yet.
+    </a>
+
   <h4> ${nPosts} </h4>
   <c:choose>
   <c:when test="${empty posts}">
-  <p>No Posts found teste</p>
+  <p>No Posts found</p>
   </c:when>
   <c:otherwise>
   <c:forEach items="${posts}" var="post">

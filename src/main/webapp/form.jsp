@@ -18,29 +18,29 @@ Copyright 2016 Google Inc.
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <div class="container">
   <h3>
-    <c:out value="${action}" /> Post
+    <c:out value="${action}" /> a  <c:out value="${type}" /> Post
   </h3>
 
   <form method="POST" action="${destination}">
 
     <div class="form-group">
       <label for="title">Title</label>
-      <input type="text" name="title" id="title" value="${fn:escapeXml(book.title)}" class="form-control" />
+      <input type="text" name="title" id="title" value="${fn:escapeXml(post.title)}" class="form-control" />
     </div>
 
     <div class="form-group">
       <label for="author">Author</label>
-      <input type="text" name="author" id="author" value="${fn:escapeXml(book.author)}" class="form-control" />
+      <input type="text" name="author" id="author" value="${fn:escapeXml(post.author)}" class="form-control" />
     </div>
 
     <div class="form-group">
       <label for="publishedDate">Date Published</label>
-      <input type="text" name="publishedDate" id="publishedDate" value="${fn:escapeXml(book.publishedDate)}" class="form-control" />
+      <input type="text" name="publishedDate" id="publishedDate" value="${fn:escapeXml(post.publishedDate)}" class="form-control" />
     </div>
 
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea name="description" id="description" class="form-control">${fn:escapeXml(book.description)}</textarea>
+      <textarea name="description" id="description" class="form-control">${fn:escapeXml(post.description)}</textarea>
     </div>
 
     <div class="form-group ${isCloudStorageConfigured ? '' : 'hidden'}">
@@ -48,10 +48,29 @@ Copyright 2016 Google Inc.
       <input type="file" name="file" id="file" class="form-control" />
     </div>
 
+    <c:choose>
+        <c:when test="${type == 'Schedule'}">
+            <div class="form-group">
+                <label for="publishedDate">Date and time of the Event</label>
+                <input type="date" name="dateAndTime" id="dateAndTime" value="${fn:escapeXml(post.dateAndTime)}" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="publishedDate">Place</label>
+                <input type="text" name="place" id="place" value="${fn:escapeXml(post.place)}" class="form-control" />
+            </div>
+        </c:when>
+        <c:when test="${type == 'Survey'}">
+            Teste ignorável
+        </c:when>
+        <c:otherwise>
+            <c:out value="That's all" />
+        </c:otherwise>
+    </c:choose>
+
     <div class="form-group hidden">
       <label for="imageUrl">Cover Image URL</label>
-      <input type="hidden" name="id" value="${book.id}" />
-      <input type="text" name="imageUrl" id="imageUrl" value="${fn:escapeXml(book.imageUrl)}" class="form-control" />
+      <input type="hidden" name="id" value="${post.id}" />
+      <input type="text" name="imageUrl" id="imageUrl" value="${fn:escapeXml(post.imageUrl)}" class="form-control" />
     </div>
 
     <button type="submit" class="btn btn-success">Save</button>

@@ -46,8 +46,17 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>list</servlet-name>
-        <url-pattern>/</url-pattern>
         <url-pattern>/books</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>listAll</servlet-name>
+        <servlet-class>com.example.getstarted.basicactions.ListAllServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>listAll</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <servlet>

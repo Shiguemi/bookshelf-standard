@@ -34,8 +34,9 @@ public class CreateScheduleServlet extends HttpServlet {
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
       IOException {
     req.setAttribute("action", "Add");          // Part of the Header in form.jsp
-    req.setAttribute("destination", "create");  // The urlPattern to invoke (this Servlet)
+    req.setAttribute("destination", "createSchedule");  // The urlPattern to invoke (this Servlet)
     req.setAttribute("page", "form");           // Tells base.jsp to include form.jsp
+    req.setAttribute("type", "Schedule");
     req.getRequestDispatcher("/base.jsp").forward(req, resp);
   }
   // [END setup]
@@ -50,6 +51,8 @@ public class CreateScheduleServlet extends HttpServlet {
         .description(req.getParameter("description"))
         .publishedDate(req.getParameter("publishedDate"))
         .title(req.getParameter("title"))
+        .place(req.getParameter("place"))
+        .dateAndTime(req.getParameter("dateAndTime"))
         .imageUrl(null)
         .build();
     // [END scheduleBuilder]
