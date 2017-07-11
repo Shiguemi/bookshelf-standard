@@ -15,7 +15,9 @@
 
 package com.example.getstarted.basicactions;
 
+import com.example.getstarted.daos.BookDao;
 import com.example.getstarted.daos.ScheduleDao;
+import com.example.getstarted.objects.Book;
 import com.example.getstarted.objects.Schedule;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 // [START example]
 @SuppressWarnings("serial")
@@ -32,24 +35,23 @@ public class RequestPostsServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,
       ServletException {
-    Long id = null;
-    String str_id = req.getParameter("id");
-    if (null != str_id) {
-        id = Long.decode(str_id);
-    }
-    ScheduleDao dao = (ScheduleDao) this.getServletContext().getAttribute("dao");
+
+    BookDao dao = (BookDao) this.getServletContext().getAttribute("dao");
     try {
-      Schedule schedule = dao.readSchedule(id);
+      List<Book> schedules = dao.listBooks("").result;
 //      Schedule schedule;
 //      schedule = new Schedule.Builder()
 //              .title("Lucas test")
 //              .build();
-      String json = new Gson().toJson(schedule);
+      String json = new Gson().toJson(schedules);
+      System.out.println("Livro em JSON: " + json);
       resp.setContentType("application/json");
       resp.setCharacterEncoding("UTF-8");
       resp.getWriter().write(json);
+      System.out.println("Livro em JSON: " + json);
+
     } catch (Exception e) {
-      throw new ServletException("Error reading schedule", e);
+      throw new ServletException("Error reading Book", e);
     }
   }
 }

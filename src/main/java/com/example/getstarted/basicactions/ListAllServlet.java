@@ -18,8 +18,10 @@ package com.example.getstarted.basicactions;
 import com.example.getstarted.daos.BookDao;
 import com.example.getstarted.daos.CloudSqlDao;
 import com.example.getstarted.daos.DatastoreDao;
+import com.example.getstarted.daos.ScheduleDao;
 import com.example.getstarted.objects.Book;
 import com.example.getstarted.objects.Result;
+import com.example.getstarted.objects.Schedule;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -69,33 +71,55 @@ public class ListAllServlet extends HttpServlet {
   }
 
   @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,
+  public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException,
           ServletException {
-    BookDao dao = (BookDao) this.getServletContext().getAttribute("dao");
-    String startCursor = req.getParameter("cursor");
-    List<Book> books = null;
-    String endCursor = null;
-    try {
-      Result<Book> result = dao.listBooks(startCursor);
-      books = result.result;
-      endCursor = result.cursor;
-      System.out.println("ListBookServlet: " + result);
-    } catch (Exception e) {
-      throw new ServletException("Error listing books", e);
-    }
+//    BookDao dao = (BookDao) this.getServletContext().getAttribute("dao");
+//    String startCursor = req.getParameter("cursor");
+//    List<Book> books = null;
+//    String endCursor = null;
+//    try {
+//      Result<Book> result = dao.listBooks(startCursor);
+//      books = result.result;
+//      endCursor = result.cursor;
+//      System.out.println("ListBookServlet: " + result);
+//    } catch (Exception e) {
+//      throw new ServletException("Error listing books", e);
+//    }
+//
+//    int nPosts = 0;
+//    req.getSession().getServletContext().setAttribute("posts", books  );
+//    StringBuilder bookNames = new StringBuilder();
+//    for (Book book : books) {
+//      bookNames.append(book.getTitle() + " ");
+//      nPosts++;
+//    }
+//
+//    ScheduleDao sdao = (ScheduleDao) this.getServletContext().getAttribute("dao");
+//    String sstartCursor = req.getParameter("cursor");
+//    List<Schedule> schedules = null;
+//    endCursor = null;
+//    try {
+//      Result<Book> result = dao.listBooks(startCursor);
+//      books = result.result;
+//      endCursor = result.cursor;
+//      System.out.println("ListBookServlet: " + result);
+//    } catch (Exception e) {
+//      throw new ServletException("Error listing books", e);
+//    }
+//
+//    req.getSession().getServletContext().setAttribute("posts", books  );
+//    StringBuilder scheduleNames = new StringBuilder();
+//    for (Book book : books) {
+//      scheduleNames.append(book.getTitle() + " ");
+//      nPosts++;
+//    }
 
-    int nBooks = 0;
-    req.getSession().getServletContext().setAttribute("posts", books  );
-    StringBuilder bookNames = new StringBuilder();
-    for (Book book : books) {
-      bookNames.append(book.getTitle() + " ");
-      nBooks++;
-    }
-
-    req.setAttribute("nPosts", nBooks);
-    req.setAttribute("cursor", endCursor);
-    req.setAttribute("page", "list");
-    req.getRequestDispatcher("/base.jsp").forward(req, resp);
+//    req.setAttribute("nPosts", nPosts);
+//    req.setAttribute("cursor", endCursor);
+//    req.setAttribute("page", "list");
+//    req.getRequestDispatcher("/base.jsp").forward(req, resp);
+      resp.getWriter().print("ola");
+      resp.getWriter().flush();
   }
 }
 // [END example]

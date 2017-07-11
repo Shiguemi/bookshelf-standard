@@ -31,6 +31,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.QueryResultIterator;
+import com.google.appengine.repackaged.com.google.gson.Gson;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -221,48 +222,5 @@ public class DatastoreDao implements BookDao, ScheduleDao {
     }
   }
   // [END listSchedules]
-
-  // [START entityToGeneral]
-  public Book entityToGeneral(Entity entity) {
-    return new Book.Builder()                                     // Convert to General form
-            .author((String)entity.getProperty(Book.AUTHOR))
-            .description((String)entity.getProperty(Book.DESCRIPTION))
-            .id(entity.getKey().getId())
-            .publishedDate((String)entity.getProperty(Book.PUBLISHED_DATE))
-            .title((String)entity.getProperty(Book.TITLE))
-            .build();
-  }
-  // [END entityToGeneral]
-  // [START entitiesToGeneral]
-  public List<Book> entitiesToGeneral(Iterator<Entity> results) {
-    List<Book> resultGeneral = new ArrayList<>();
-    while (results.hasNext()) {  // We still have data
-      resultGeneral.add(entityToGeneral(results.next()));      // Add the Schedule to the List
-    }
-    return resultGeneral;
-  }
-  // [END entitiesToGeneral]
-  // [START listAll]
-  public Result<Book> listAll(String startCursorString) {
-    FetchOptions fetchOptions = FetchOptions.Builder.withLimit(10); // Only show 10 at a time
-    if (startCursorString != null && !startCursorString.equals("")) {
-      fetchOptions.startCursor(Cursor.fromWebSafeString(startCursorString)); // Where we left off
-    }
-    Query query = new Query(SCHEDULE_KIND) // We only care about All
-            .addSort(Schedule.TITLE, SortDirection.ASCENDING); // Use default Index "title"
-    PreparedQuery preparedQuery = datastore.prepare(query);
-    QueryResultIterator<Entity> results = preparedQuery.asQueryResultIterator(fetchOptions);
-
-    List<Book> resultAll = entitiesToGeneral(results);     // Retrieve and convert Entities
-    Cursor cursor = results.getCursor();              // Where to start next time
-    if (cursor != null && resultAll.size() == 10) {         // Are we paging? Save Cursor
-      String cursorString = cursor.toWebSafeString();               // Cursors are WebSafe
-      return new Result<>(resultAll, cursorString);
-    } else {
-      return new Result<>(resultAll);
-    }
-  }
-  // [END listAll]
-
 }
 // [END example]
