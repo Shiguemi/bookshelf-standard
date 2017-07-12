@@ -36,22 +36,42 @@ public class RequestPostsServlet extends HttpServlet {
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,
       ServletException {
 
-    BookDao dao = (BookDao) this.getServletContext().getAttribute("dao");
+
     try {
-      List<Book> schedules = dao.listBooks("").result;
+
 //      Schedule schedule;
 //      schedule = new Schedule.Builder()
 //              .title("Lucas test")
 //              .build();
-      String json = new Gson().toJson(schedules);
-      System.out.println("Livro em JSON: " + json);
+
+      String postType = req.getParameter("postType");
+      System.out.println(postType);
+      String json = "";
+      switch (postType)
+      {
+        case "SCHEDULE":{
+          ScheduleDao dao = (ScheduleDao) this.getServletContext().getAttribute("dao");
+          List<Schedule> posts = dao.listSchedules("").result;
+          json = new Gson().toJson(posts);
+          break;
+        }
+        default:{
+
+          BookDao dao = (BookDao) this.getServletContext().getAttribute("dao");
+          List<Book> posts = dao.listBooks("").result;
+          json = new Gson().toJson(posts);
+          break;
+        }
+      }
+
+      System.out.println("Post in JSON: " + json);
       resp.setContentType("application/json");
       resp.setCharacterEncoding("UTF-8");
       resp.getWriter().write(json);
-      System.out.println("Livro em JSON: " + json);
+      System.out.println("Post in JSON: " + json);
 
     } catch (Exception e) {
-      throw new ServletException("Error reading Book", e);
+      throw new ServletException("Error reading Post", e);
     }
   }
 }

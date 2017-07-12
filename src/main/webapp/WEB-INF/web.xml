@@ -28,7 +28,7 @@
         <url-pattern>/posts</url-pattern>
         <url-pattern>/lists</url-pattern>
         <url-pattern>/books/mine</url-pattern>
-        <url-pattern>/create</url-pattern>
+        <url-pattern>/createBook</url-pattern>
         <url-pattern>/createSchedule</url-pattern>
         <url-pattern>/delete</url-pattern>
         <url-pattern>/login</url-pattern>
@@ -70,12 +70,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>create</servlet-name>
+        <servlet-name>createBook</servlet-name>
         <servlet-class>com.example.getstarted.basicactions.CreateBookServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>create</servlet-name>
-        <url-pattern>/create</url-pattern>
+        <servlet-name>createBook</servlet-name>
+        <url-pattern>/createBook</url-pattern>
     </servlet-mapping>
 
     <servlet>

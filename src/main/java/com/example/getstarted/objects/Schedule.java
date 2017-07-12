@@ -200,5 +200,7 @@ public class Schedule {
         "Title: " + title + ", Author: " + author + ", Published date: " + publishedDate
         + ", Added by: " + createdBy;
   }
+
+  public Schedule () {  }
 }
 // [END example]

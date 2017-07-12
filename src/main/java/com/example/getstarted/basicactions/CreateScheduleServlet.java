@@ -17,13 +17,16 @@ package com.example.getstarted.basicactions;
 
 import com.example.getstarted.daos.ScheduleDao;
 import com.example.getstarted.objects.Schedule;
-
-import java.io.IOException;
+import com.google.appengine.repackaged.com.google.gson.Gson;
+import com.google.appengine.repackaged.com.google.gson.GsonBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+
 
 // [START example]
 @SuppressWarnings("serial")
@@ -46,22 +49,35 @@ public class CreateScheduleServlet extends HttpServlet {
   public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
       IOException {
     // [START scheduleBuilder]
-    Schedule schedule = new Schedule.Builder()
-        .author(req.getParameter("author"))   // form parameter
-        .description(req.getParameter("description"))
-        .publishedDate(req.getParameter("publishedDate"))
-        .title(req.getParameter("title"))
-        .place(req.getParameter("place"))
-        .dateAndTime(req.getParameter("dateAndTime"))
-        .imageUrl(null)
-        .build();
+//    Schedule schedule = new Schedule.Builder()
+//            .author(req.getParameter("author"))   // form parameter
+//            .description(req.getParameter("description"))
+//            .publishedDate(req.getParameter("publishedDate"))
+//            .title(req.getParameter("title"))
+//            .place(req.getParameter("place"))
+//            .dateAndTime(req.getParameter("dateAndTime"))
+//            .imageUrl(null)
+//            .build();
+    StringBuffer jb = new StringBuffer();
+    System.out.println("Content-Type: " + req.getHeader("Content-Type"));
+    Schedule schedule = null;
+    try {
+        BufferedReader reader = req.getReader();
+        Gson gson = new GsonBuilder().create();
+        schedule = gson.fromJson(reader, Schedule.class);
+    } catch (Exception e)
+    {
+        System.err.println(e.getMessage());
+    }
+
     // [END scheduleBuilder]
 
     ScheduleDao dao = (ScheduleDao) this.getServletContext().getAttribute("dao");
     try {
       Long id = dao.createSchedule(schedule);
-      resp.sendRedirect("/read?id=" + id.toString());   // read what we just wrote
+      req.setAttribute("feedback", "OK");
     } catch (Exception e) {
+      req.setAttribute("feedback", "NOTOK");
       throw new ServletException("Error creating schedule", e);
     }
   }
