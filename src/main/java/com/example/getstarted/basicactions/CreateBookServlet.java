@@ -17,7 +17,11 @@ package com.example.getstarted.basicactions;
 
 import com.example.getstarted.daos.BookDao;
 import com.example.getstarted.objects.Book;
+import com.example.getstarted.objects.Schedule;
+import com.google.appengine.repackaged.com.google.gson.Gson;
+import com.google.appengine.repackaged.com.google.gson.GsonBuilder;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -45,13 +49,27 @@ public class CreateBookServlet extends HttpServlet {
   public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
       IOException {
     // [START bookBuilder]
-    Book book = new Book.Builder()
-        .author(req.getParameter("author"))   // form parameter
-        .description(req.getParameter("description"))
-        .publishedDate(req.getParameter("publishedDate"))
-        .title(req.getParameter("title"))
-        .imageUrl(null)
-        .build();
+    Book book = null;
+    if (req.getHeader("Content-Type").equals("application/json"))
+    {
+      try {
+        BufferedReader reader = req.getReader();
+        Gson gson = new GsonBuilder().create();
+        book = gson.fromJson(reader, Book.class);
+      } catch (Exception e)
+      {
+        System.err.println(e.getMessage());
+      }
+    } else {
+      book = new Book.Builder()
+              .author(req.getParameter("author"))   // form parameter
+              .description(req.getParameter("description"))
+              .publishedDate(req.getParameter("publishedDate"))
+              .title(req.getParameter("title"))
+              .imageUrl(null)
+              .build();
+    }
+
     // [END bookBuilder]
 
     BookDao dao = (BookDao) this.getServletContext().getAttribute("dao");

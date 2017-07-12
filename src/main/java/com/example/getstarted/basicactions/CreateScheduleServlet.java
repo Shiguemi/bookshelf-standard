@@ -48,28 +48,30 @@ public class CreateScheduleServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
       IOException {
-    // [START scheduleBuilder]
-//    Schedule schedule = new Schedule.Builder()
-//            .author(req.getParameter("author"))   // form parameter
-//            .description(req.getParameter("description"))
-//            .publishedDate(req.getParameter("publishedDate"))
-//            .title(req.getParameter("title"))
-//            .place(req.getParameter("place"))
-//            .dateAndTime(req.getParameter("dateAndTime"))
-//            .imageUrl(null)
-//            .build();
-    StringBuffer jb = new StringBuffer();
-    System.out.println("Content-Type: " + req.getHeader("Content-Type"));
-    Schedule schedule = null;
-    try {
-        BufferedReader reader = req.getReader();
-        Gson gson = new GsonBuilder().create();
-        schedule = gson.fromJson(reader, Schedule.class);
-    } catch (Exception e)
-    {
-        System.err.println(e.getMessage());
-    }
+      // [START scheduleBuilder]
+      Schedule schedule = null;
 
+      if (req.getHeader("Content-Type").equals("application/json"))
+      {
+          try {
+              BufferedReader reader = req.getReader();
+              Gson gson = new GsonBuilder().create();
+              schedule = gson.fromJson(reader, Schedule.class);
+          } catch (Exception e)
+          {
+              System.err.println(e.getMessage());
+          }
+      } else {
+          schedule = new Schedule.Builder()
+                  .author(req.getParameter("author"))   // form parameter
+                  .description(req.getParameter("description"))
+                  .publishedDate(req.getParameter("publishedDate"))
+                  .title(req.getParameter("title"))
+                  .place(req.getParameter("place"))
+                  .dateAndTime(req.getParameter("dateAndTime"))
+                  .imageUrl(null)
+                  .build();
+      }
     // [END scheduleBuilder]
 
     ScheduleDao dao = (ScheduleDao) this.getServletContext().getAttribute("dao");

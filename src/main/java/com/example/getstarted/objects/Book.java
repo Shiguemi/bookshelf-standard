@@ -176,5 +176,7 @@ public class Book {
         "Title: " + title + ", Author: " + author + ", Published date: " + publishedDate
         + ", Added by: " + createdBy;
   }
+
+  public Book () {}
 }
 // [END example]
