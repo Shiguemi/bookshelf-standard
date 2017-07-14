@@ -15,21 +15,17 @@
 
 package com.example.getstarted.basicactions;
 
-import com.example.getstarted.daos.BookDao;
-import com.example.getstarted.daos.ScheduleDao;
-import com.example.getstarted.daos.CloudSqlDao;
 import com.example.getstarted.daos.DatastoreDao;
-import com.example.getstarted.objects.Schedule;
+import com.example.getstarted.daos.ScheduleDao;
 import com.example.getstarted.objects.Result;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
+import com.example.getstarted.objects.Schedule;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
 
 // [START example]
 @SuppressWarnings("serial")
@@ -47,36 +43,13 @@ public class ListScheduleServlet extends HttpServlet {
         break;
       default:
         throw new IllegalStateException(
-            "Invalid storage type. Check if bookshelf.storageType property is set.");
+                "Invalid storage type. Check if bookshelf.storageType property is set.");
     }
     this.getServletContext().setAttribute("dao", dao);
   }
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,
-          ServletException {
-    ScheduleDao dao = (ScheduleDao) this.getServletContext().getAttribute("dao");
-    String startCursor = req.getParameter("cursor");
-    List<Schedule> schedules = null;
-    String endCursor = null;
-    try {
-      Result<Schedule> result = dao.listSchedules(startCursor);
-      schedules = result.result;
-      endCursor = result.cursor;
-    } catch (Exception e) {
-      throw new ServletException("Error listing schedules", e);
-    }
-    req.getSession().getServletContext().setAttribute("posts", schedules);
-    StringBuilder scheduleNames = new StringBuilder();
-    for (Schedule schedule : schedules) {
-      scheduleNames.append(schedule.getTitle() + " ");
-    }
-    req.setAttribute("cursor", endCursor);
-    req.setAttribute("page", "list");
-    req.getRequestDispatcher("/base.jsp").forward(req, resp);
-  }
-
-  public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException,
           ServletException {
     ScheduleDao dao = (ScheduleDao) this.getServletContext().getAttribute("dao");
     String startCursor = req.getParameter("cursor");

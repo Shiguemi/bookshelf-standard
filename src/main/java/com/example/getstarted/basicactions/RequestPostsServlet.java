@@ -36,7 +36,6 @@ public class RequestPostsServlet extends HttpServlet {
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,
       ServletException {
 
-
     try {
 
 //      Schedule schedule;
@@ -76,3 +75,4 @@ public class RequestPostsServlet extends HttpServlet {
   }
 }
 // [END example]
+

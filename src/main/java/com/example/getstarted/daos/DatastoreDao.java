@@ -43,7 +43,7 @@ public class DatastoreDao implements BookDao, ScheduleDao {
 
   // [START constructor]
   private DatastoreService datastore;
-  private static final String BOOK_KIND = "Book42";
+  private static final String BOOK_KIND = "Book";
   private static final String SCHEDULE_KIND = "Schedule";
 
   public DatastoreDao() {
@@ -69,6 +69,7 @@ public class DatastoreDao implements BookDao, ScheduleDao {
     incBookEntity.setProperty(Book.DESCRIPTION, book.getDescription());
     incBookEntity.setProperty(Book.PUBLISHED_DATE, book.getPublishedDate());
     incBookEntity.setProperty(Book.TITLE, book.getTitle());
+    incBookEntity.setProperty(Book.IMAGE, book.getImage());
 
     Key bookKey = datastore.put(incBookEntity); // Save the Entity
     return bookKey.getId();                     // The ID of the Key

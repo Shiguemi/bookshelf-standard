@@ -15,6 +15,11 @@
 
 package com.example.getstarted.objects;
 
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesServiceFactory;
+
+import javax.xml.bind.DatatypeConverter;
+
 // [START example]
 public class Book {
 // [START book]
@@ -26,6 +31,7 @@ public class Book {
   private String description;
   private Long id;
   private String imageUrl;
+  private Image image;
 // [END book]
 // [START keys]
   public static final String AUTHOR = "author";
@@ -36,6 +42,7 @@ public class Book {
   public static final String PUBLISHED_DATE = "publishedDate";
   public static final String TITLE = "title";
   public static final String IMAGE_URL = "imageUrl";
+  public static final String IMAGE = "image";
 // [END keys]
 // [START constructor]
   // We use a Builder pattern here to simplify and standardize construction of Book objects.
@@ -60,6 +67,7 @@ public class Book {
     private String description;
     private Long id;
     private String imageUrl;
+    private Image image;
 
     public Builder title(String title) {
       this.title = title;
@@ -106,6 +114,10 @@ public class Book {
     }
   }
 
+  public void base64ToImage () {
+      byte[] decoded = DatatypeConverter.parseBase64Binary(imageUrl);
+      this.image = ImagesServiceFactory.makeImage(decoded);
+  }
   public String getTitle() {
     return title;
   }
@@ -169,7 +181,16 @@ public class Book {
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
   }
-// [END builder]
+
+  public Image getImage() { return image; }
+
+  public void setImage(String s) {
+      byte[] decoded = DatatypeConverter.parseBase64Binary(s);
+      Image image = ImagesServiceFactory.makeImage(decoded);
+      this.image = image;
+  }
+
+    // [END builder]
   @Override
   public String toString() {
     return

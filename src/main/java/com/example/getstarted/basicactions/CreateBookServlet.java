@@ -17,17 +17,15 @@ package com.example.getstarted.basicactions;
 
 import com.example.getstarted.daos.BookDao;
 import com.example.getstarted.objects.Book;
-import com.example.getstarted.objects.Schedule;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.google.appengine.repackaged.com.google.gson.GsonBuilder;
-
-import java.io.BufferedReader;
-import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 // [START example]
 @SuppressWarnings("serial")
@@ -54,19 +52,30 @@ public class CreateBookServlet extends HttpServlet {
     {
       try {
         BufferedReader reader = req.getReader();
+        //Debug start
+        String s = "";
+        String line = reader.readLine();
+        while (line != null)
+        {
+          s += line;
+          line = reader.readLine();
+        }
+        System.out.println("Book received: " + s);
+        //Debug end
         Gson gson = new GsonBuilder().create();
-        book = gson.fromJson(reader, Book.class);
+        book = gson.fromJson(s, Book.class);
       } catch (Exception e)
       {
         System.err.println(e.getMessage());
       }
+      book.base64ToImage();
     } else {
       book = new Book.Builder()
               .author(req.getParameter("author"))   // form parameter
               .description(req.getParameter("description"))
               .publishedDate(req.getParameter("publishedDate"))
               .title(req.getParameter("title"))
-              .imageUrl(null)
+              .imageUrl("imageUrl")
               .build();
     }
 
