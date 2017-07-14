@@ -11,6 +11,10 @@ Most users can get this running by updating the parameters in `pom.xml`.
 
     mvn -Plocal clean appengine:devserver
 
+    or in UI
+    bookshelf-standard-2/Plugins/appengine/appengine:devserver
+    on "Maven project" menu.
+
 ### Deploying to App Engine Standard
 
 * Deploy your App
