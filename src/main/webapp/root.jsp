@@ -15,10 +15,48 @@ Copyright 2016 Google Inc.
 -->
 <!-- [START list] -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>]
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '194943897656179',
+      xfbml      : true,
+      version    : 'v2.9'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+   FB.getLoginStatus(function(response) {
+     if (response.status === 'connected') {
+       alert("Logged");
+       var uid = response.authResponse.userID;
+       var accessToken = response.authResponse.accessToken;
+     } else if (response.status === 'not_authorized') {
+       alert("Not logged in app");
+     } else {
+       alert("Not logged in facebook");
+     }
+    }, true);
+
+    FB.logout(function(response) {
+       // Person is now logged out
+    });
+</script>
+
+
+
+
 <div class="container">
   <h3>Post</h3>
-
     <a href="/create" class="btn btn-success btn-sm">
       <i class="glyphicon glyphicon-plus"></i>
       Add a test Book
@@ -61,4 +99,8 @@ Copyright 2016 Google Inc.
   </c:otherwise>
   </c:choose>
 </div>
+<button onclick="testar = FB.get; alert(testar);">Check Status</button>
+<button onclick="FB.logout();">Sair do facebook</button>
+<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
 <!-- [END list] -->
