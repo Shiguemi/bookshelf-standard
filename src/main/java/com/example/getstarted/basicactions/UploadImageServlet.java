@@ -21,22 +21,28 @@ import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.google.appengine.repackaged.com.google.gson.GsonBuilder;
 
-import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
+
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+
 
 
 // [START example]
 @SuppressWarnings("serial")
 public class UploadImageServlet extends HttpServlet {
+
+    private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
   // [START setup]
   @Override
@@ -54,7 +60,8 @@ public class UploadImageServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
       IOException {
-      Map<String, List<BlobKey>> blobs = BlobstoreService.getUploads(req);
+
+      Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
       List<BlobKey> blobKeys = blobs.get("myFile");
 
       if (blobKeys == null || blobKeys.isEmpty()) {
